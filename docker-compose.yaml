@@ -1,23 +1,27 @@
 version: "2"
 services:
    namenode:
+      network_mode: host
       image: flokkr/hadoop:latest
-      hostname: namenode
       command: ["hdfs","namenode"]
-      ports:
-         - 50070:50070
-         - 9870:9870
+      # ports:
+      #    - 50070:50070
+      #    - 9870:9870
       env_file:
         - ./compose-config
       environment:
           NAMENODE_INIT: "hdfs dfs -chmod 777 /"
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
    datanode:
+      network_mode: host
       command: ["hdfs","datanode"]
       image: flokkr/hadoop:latest
       env_file:
         - ./compose-config
+      # ports:
+      #    - 9864:9864
    resourcemanager:
+      network_mode: host
       image: flokkr/hadoop:latest
       hostname: resourcemanager
       command: ["yarn", "resourcemanager"]
@@ -26,6 +30,7 @@ services:
       env_file:
         - ./compose-config
    nodemanager:
+      network_mode: host
       image: flokkr/hadoop-yarn-nodemanager:latest
       command: ["yarn", "nodemanager"]
       env_file:
