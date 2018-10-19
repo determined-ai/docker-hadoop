@@ -15,6 +15,9 @@ services:
    datanode:
       command: ["hdfs","datanode"]
       image: flokkr/hadoop:latest
+      hostname: localhost
+      ports:
+        - 9864:9864
       env_file:
         - ./compose-config
    resourcemanager:
